@@ -267,6 +267,32 @@ public class HealthKitManager {
         
     }
     
+    public func fetchQuantities(for itemId: HKQuantityTypeIdentifier,
+                                since: Date) async -> [HKQuantitySample] {
+        
+        guard let type = HKQuantityType.quantityType(forIdentifier: itemId) else {
+            fatalError("Unabled to create HKCategoryType")
+        }
+        
+        return await withCheckedContinuation { continuation in
+            let query = HKSampleQuery(sampleType: type, predicate: nil, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) { query, results, error in
+                if let error {
+                    print("** Error processing query: \(error.localizedDescription)")
+                    continuation.resume(returning: [])
+                }
+                
+                guard let samples = results as? [HKQuantitySample] else {
+                    continuation.resume(returning: [])
+                    return
+                }
+                
+                continuation.resume(returning: samples)
+            }
+            
+            healthStore.execute(query)
+        }
+    }
+    
     // MARK: Delete Methods
     
     public func deleteSample(_ object: HKObject) async throws {
