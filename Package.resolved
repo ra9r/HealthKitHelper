@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "ra9rkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ra9r/Ra9rKit.git",
+      "state" : {
+        "revision" : "fa5a76722c979cee24eb7559ce4c53f1c5ce1168",
+        "version" : "1.4.0"
+      }
+    }
+  ],
+  "version" : 2
+}

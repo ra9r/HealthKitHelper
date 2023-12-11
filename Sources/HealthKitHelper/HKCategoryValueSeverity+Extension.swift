@@ -9,6 +9,16 @@ import Foundation
 import HealthKit
 
 public extension HKCategoryValueSeverity {
+    
+    static let allCases: [HKCategoryValueSeverity] = [
+        .notPresent,
+        .mild,
+        .moderate,
+        .severe,
+        .unspecified
+    ]
+    
+    /// Convinient user-facing description for the `HKCategoryValueSeverity`
     var description: String {
         switch self {
             case .notPresent:
@@ -26,3 +36,4 @@ public extension HKCategoryValueSeverity {
         }
     }
 }
+

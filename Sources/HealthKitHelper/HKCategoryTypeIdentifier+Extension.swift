@@ -1,19 +1,22 @@
 //
-//  File.swift
-//  
+//  HKCategoryTypeIdentifier+Extension.swift
+//
 //
 //  Created by Rodney Aiglstorfer on 12/4/23.
 //
 
 import Foundation
 import HealthKit
+import Ra9rKit
 
 public extension HKCategoryTypeIdentifier {
     
+    /// Convinient user-facing description for the `HKCategoryTypeIdentifier` that formats the `rawValue`
     var description: String {
         return self.rawValue.replacingOccurrences(of: "HKCategoryTypeIdentifier", with: "").titlecase()
     }
     
+    /// Returns a subset of `HKCategoryTypeIdentifier` that are specifically symptom related.
     static var symptoms: [HKCategoryTypeIdentifier] {
         return [.abdominalCramps,
                 .acne,

@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/ra9r/Ra9rKit.git",
-            from: "1.3.3")
+            from: "1.4.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
