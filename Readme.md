@@ -1,4 +1,21 @@
-`HealthKitHelper` is a collection of utilities that make using Apple Health (HealthKit) easier to use.
+`HealthKitHelper` is a collection of utilities, extensions, and property-wrappers that make using Apple Health (HealthKit) more "SwiftUI Like".
+
+To use HealthKitHelper you'll need to first add the `HealthKitManager` to the environment.  
+
+```swift
+import SwiftUI
+import HealthKitHelper
+
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .environmentObject(HealthKitManager())
+        }
+    }
+}
+```
 
 # Property Wrappers
 HealthKit isn't really very SwiftUI friendly.  To help with this fact, `HealthKitHelper` offers a collection of 
@@ -63,3 +80,21 @@ struct BodyMassList : View {
     }
 }
 ```
+
+# Useful Extensions
+
+## `HKCategoryTypeIdentifier` Extensions
+
+* `.description` Returns an english (not localized) description of the category type identifier.
+* `.symptoms` Returns an array of just the symptom related `HKCategoryTypeIdentifier`'s
+
+
+## `HKQuantityTypeIdentifier` Extensions
+
+* `.description` Returns an english (not localized) description of the quantity type identifier.
+* `.vitals` Returns an array of just the vitals related `HKQuantityTypeIdentifier`'s
+
+## `HKCategoryValueSeverity` Extensions
+
+* `.description` Returns an english (not localized) description of the severity type
+* `.allCases` Returns an array of all the enumerated types (because, oddly the native version doesn't have this)
