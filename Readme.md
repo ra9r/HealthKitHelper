@@ -17,6 +17,21 @@ struct MyApp: App {
 }
 ```
 
+With this done you can access the `HealthKitManager` using `@EnvironmentObject` ...
+
+```swift
+import SwiftUI
+import HealthKit
+import HealthKitHelper
+
+struct MyView: View {
+    @EnvironmentObject 
+    var healthKitManager: HealthKitManager
+    
+    // ...
+}
+```
+
 # Property Wrappers
 HealthKit isn't really very SwiftUI friendly.  To help with this fact, `HealthKitHelper` offers a collection of 
 handy property wrappers that were inspired by the `SwiftData` `@Query` property wrappers.
