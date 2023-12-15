@@ -77,7 +77,7 @@ import HealthKit
 import HealthKitHelper
 
 struct BodyMassList : View {
-    @HealthKitCategoryQuery(.bodyMass)
+    @HealthKitQuantityQuery(.bodyMass)
     var samples: [HKQuantitySample]
 
     var body: some View {
