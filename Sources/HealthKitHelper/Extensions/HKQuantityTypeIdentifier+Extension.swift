@@ -7,7 +7,7 @@
 
 import Foundation
 import HealthKit
-import Ra9rKit
+import Ra9rCore
 
 extension HKQuantityTypeIdentifier {
     /// Convinient user-facing description for the `HKQuantityTypeIdentifier` that formats the `rawValue`

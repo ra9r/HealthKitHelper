@@ -7,7 +7,7 @@
 
 import Foundation
 import HealthKit
-import Ra9rKit
+import Ra9rCore
 
 public extension HKCategoryTypeIdentifier {
     
