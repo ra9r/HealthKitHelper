@@ -122,6 +122,7 @@ public class HealthKitManager : ObservableObject {
     // MARK: Fetching Functions
     
     public func fetch(_ categoryType: HKCategoryTypeIdentifier, 
+                      predicate: NSPredicate? = nil,
                       completion: @escaping ([HKCategorySample], Error?) -> Void) {
         guard let objType = HKObjectType.categoryType(forIdentifier: categoryType) else {
             // Handle the error if the category type is not valid.
@@ -131,7 +132,7 @@ public class HealthKitManager : ObservableObject {
         }
         
         let query = HKSampleQuery(sampleType: objType,
-                                  predicate: nil,
+                                  predicate: predicate,
                                   limit: HKObjectQueryNoLimit,
                                   sortDescriptors: nil) { (query, results, error) in
             guard let results = results as? [HKCategorySample] else {
@@ -144,14 +145,26 @@ public class HealthKitManager : ObservableObject {
         healthStore.execute(query)
     }
     
-    public func fetch(_ quantityType: HKQuantityTypeIdentifier,
+    public func fetch(_ categoryType: HKCategoryTypeIdentifier, predicate: NSPredicate? = nil) async throws -> [HKCategorySample] {
+        return try await withCheckedThrowingContinuation { continuation in
+            fetch(categoryType, predicate: predicate) { samples, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: samples)
+                }
+            }
+        }
+    }
+    
+    public func fetch(_ quantityType: HKQuantityTypeIdentifier, predicate: NSPredicate? = nil,
                       completion: @escaping ([HKQuantitySample], Error?) -> Void) {
         
         guard let type = HKQuantityType.quantityType(forIdentifier: quantityType) else {
             fatalError("Error: Invalid quantity type \(quantityType.description)")
         }
         
-        let query = HKSampleQuery(sampleType: type, predicate: nil, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) { query, results, error in
+        let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) { query, results, error in
             guard let results = results as? [HKQuantitySample] else {
                 completion([], error)
                 return
@@ -160,6 +173,20 @@ public class HealthKitManager : ObservableObject {
         }
         
         healthStore.execute(query)
+    }
+    
+
+    
+    public func fetch(_ quantityType: HKQuantityTypeIdentifier, predicate: NSPredicate? = nil) async throws -> [HKQuantitySample] {
+        return try await withCheckedThrowingContinuation { continuation in
+            fetch(quantityType, predicate: predicate) { samples, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: samples)
+                }
+            }
+        }
     }
     
     // MARK: Utility Functions
