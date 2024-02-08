@@ -12,6 +12,10 @@ public class HealthKitManager : ObservableObject {
     
     private var healthStore = HKHealthStore()
     
+    public var store: HKHealthStore {
+        return healthStore
+    }
+    
     public init() {
         // Placeholder for now
     }
