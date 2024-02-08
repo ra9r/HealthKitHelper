@@ -191,7 +191,7 @@ public class HealthKitManager : ObservableObject {
     
     // MARK: Utility Functions
     
-    func preferredUnits(for typeId: HKQuantityTypeIdentifier) async throws -> HKUnit? {
+    public func preferredUnits(for typeId: HKQuantityTypeIdentifier) async throws -> HKUnit? {
         guard let type = HKQuantityType.quantityType(forIdentifier: typeId) else {
             fatalError("** Failed to get HKQuantityType for \(typeId.description) **")
         }
@@ -199,7 +199,7 @@ public class HealthKitManager : ObservableObject {
         return try await preferredUnits(for: type)
     }
     
-    func preferredUnits(for type: HKQuantityType)  async throws -> HKUnit? {
+    public func preferredUnits(for type: HKQuantityType)  async throws -> HKUnit? {
         return try await withCheckedThrowingContinuation { continuation in
             healthStore.preferredUnits(for: [type]) { dict, error in
                 if let error {
