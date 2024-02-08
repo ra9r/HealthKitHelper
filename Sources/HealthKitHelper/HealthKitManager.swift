@@ -79,13 +79,17 @@ public class HealthKitManager : ObservableObject {
 
     public func saveCategory(_ typeId: HKCategoryTypeIdentifier,
                              severity: HKCategoryValueSeverity,
-                             start: Date, end: Date? = nil) async throws -> HKCategorySample {
+                             start: Date, 
+                             end: Date? = nil,
+                             metadata: [String: Any]? = nil) async throws -> HKCategorySample {
         
         let categoryType = HKCategoryType.categoryType(forIdentifier: typeId)!
         
         let sample = HKCategorySample(type: categoryType,
                                       value: severity.rawValue,
-                                      start: start, end: end ?? start)
+                                      start: start, 
+                                      end: end ?? start,
+                                      metadata: metadata)
         
         try await healthStore.save(sample)
         
@@ -94,7 +98,9 @@ public class HealthKitManager : ObservableObject {
     
     public func saveQuantity(_ typeId: HKQuantityTypeIdentifier,
                              quantity: Double,
-                             start: Date, end: Date? = nil) async throws -> HKQuantitySample {
+                             start: Date, 
+                             end: Date? = nil,
+                             metadata: [String: Any]? = nil) async throws -> HKQuantitySample {
         
         let quantityType = HKQuantityType.quantityType(forIdentifier: typeId)!
         
@@ -102,10 +108,11 @@ public class HealthKitManager : ObservableObject {
         
         let quantity = HKQuantity(unit: units!, doubleValue: quantity)
         
-        let sample = HKQuantitySample(type: quantityType, 
+        let sample = HKQuantitySample(type: quantityType,
                                       quantity: quantity,
                                       start: start,
-                                      end: end ?? start)
+                                      end: end ?? start,
+                                      metadata: metadata)
         
         try await healthStore.save(sample)
         
